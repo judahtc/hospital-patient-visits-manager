@@ -76,6 +76,7 @@ class Visitor(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     national_id = Column(String, unique=True, nullable=False)
+    visited = Column(Boolean,  default=False)
     visit_date = Column(DateTime, nullable=False)
     patient_id = Column(Integer,
                         ForeignKey("patients.id"), nullable=False)

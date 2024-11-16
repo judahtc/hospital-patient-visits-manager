@@ -50,3 +50,19 @@ def create_hospital(hospital: schemas.HospitalCreate, db: Session = Depends(get_
     db.commit()
     db.refresh(new_hospital)
     return new_hospital
+
+
+@router.put("/{hospital_id}")
+def update_hospital(hospital_id: int, hospital: schemas.HospitalUpdate, db: Session = Depends(get_db)):
+    db_hospital = db.query(models.Hospital).filter(
+        models.Hospital.id == hospital_id).first()
+    if not db_hospital:
+        raise HTTPException(status_code=404, detail="Hospital not found")
+
+    for key, value in hospital.dict(exclude_unset=True).items():
+        setattr(db_hospital, key, value)
+
+    db_hospital.updated_at = datetime.now
+    db.commit()
+    db.refresh(db_hospital)
+    return db_hospital
