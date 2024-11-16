@@ -28,3 +28,35 @@ class HospitalRead(HospitalBase):
     id: int
     created_at: datetime
     updated_at: datetime
+
+
+class AdminBase(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    phone_number: str
+    role: str
+    hospital_id: int
+    is_active: bool = True
+
+
+class AdminCreate(AdminBase):
+    password: str
+
+
+class AdminUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    email: str | None = None
+    phone_number: str | None = None
+    role: str | None = None
+    is_active: bool | None = None
+
+
+class AdminResponse(AdminBase):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
