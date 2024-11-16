@@ -17,7 +17,7 @@ def get_visitors():
 # Create Visitor
 
 
-@router.post("/visitors/", response_model=schemas.VisitorResponse)
+@router.post("/", response_model=schemas.VisitorResponse)
 def create_visitor(visitor: schemas.VisitorCreate, db: Session = Depends(get_db)):
     db_visitor = db.query(models.Visitor).filter(
         models.Visitor.national_id == visitor.national_id).first()
@@ -33,7 +33,7 @@ def create_visitor(visitor: schemas.VisitorCreate, db: Session = Depends(get_db)
 # Get All Visitors
 
 
-@router.get("/visitors/", response_model=List[schemas.VisitorResponse])
+@router.get("/", response_model=List[schemas.VisitorResponse])
 def read_visitors(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     visitors = db.query(models.Visitor).all()
     return visitors
@@ -41,7 +41,7 @@ def read_visitors(skip: int = 0, limit: int = 10, db: Session = Depends(get_db))
 # Get Single Visitor by ID
 
 
-@router.get("/visitors/{visitor_id}", response_model=schemas.schemas.VisitorResponse)
+@router.get("/{visitor_id}", response_model=schemas.VisitorResponse)
 def read_visitor(visitor_id: int, db: Session = Depends(get_db)):
     visitor = db.query(models.Visitor).filter(
         models.Visitor.id == visitor_id).first()
@@ -52,7 +52,7 @@ def read_visitor(visitor_id: int, db: Session = Depends(get_db)):
 # Query Visitor by National ID
 
 
-@router.get("/visitors/by-national-id/{national_id}", response_model=schemas.VisitorResponse)
+@router.get("/by-national-id/{national_id}", response_model=schemas.VisitorResponse)
 def get_visitor_by_national_id(national_id: str, db: Session = Depends(get_db)):
     visitor = db.query(models.Visitor).filter(
         models.Visitor.national_id == national_id).first()
@@ -64,7 +64,7 @@ def get_visitor_by_national_id(national_id: str, db: Session = Depends(get_db)):
 # Update Visitor
 
 
-@router.put("/visitors/{visitor_id}", response_model=schemas.VisitorResponse)
+@router.put("/{visitor_id}", response_model=schemas.VisitorResponse)
 def update_visitor(visitor_id: int, visitor_update: schemas.VisitorUpdate, db: Session = Depends(get_db)):
     visitor = db.query(models.Visitor).filter(
         models.Visitor.id == visitor_id).first()
@@ -79,7 +79,7 @@ def update_visitor(visitor_id: int, visitor_update: schemas.VisitorUpdate, db: S
 # Delete Visitor
 
 
-@router.delete("/visitors/{visitor_id}", response_model=dict)
+@router.delete("/{visitor_id}", response_model=dict)
 def delete_visitor(visitor_id: int, db: Session = Depends(get_db)):
     visitor = db.query(models.Visitor).filter(
         models.Visitor.id == visitor_id).first()
