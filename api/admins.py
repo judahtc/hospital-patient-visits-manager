@@ -14,6 +14,9 @@ def get_admins():
     return {"name": "Judah Chisare", "national_id": "67-161886z67"}
 
 
+# ------------------------------------- Create Admins --------------------------------------------------
+
+
 @router.post("/", response_model=schemas.AdminResponse)
 def create_admin(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
     db_admin = db.query(models.Admin).filter(
@@ -26,7 +29,7 @@ def create_admin(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
     db.refresh(new_admin)
     return new_admin
 
-# Read All Admins
+# ------------------------------------- Read All Admins --------------------------------------------------
 
 
 @router.get("/", response_model=List[schemas.AdminResponse])
@@ -34,7 +37,7 @@ def read_admins(skip: int = 0,  db: Session = Depends(get_db)):
     admins = db.query(models.Admin).all()
     return admins
 
-# Read Single Admin
+# -------------------------------------------------- Read Single Admin --------------------------------------------------
 
 
 @router.get("/{admin_id}", response_model=schemas.AdminResponse)
@@ -44,7 +47,7 @@ def read_admin(admin_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Admin not found")
     return admin
 
-# Update Admin
+# -------------------------------------------------- Update Admin --------------------------------------------------
 
 
 @router.put("/{admin_id}", response_model=schemas.AdminResponse)
@@ -58,7 +61,7 @@ def update_admin(admin_id: int, admin_update: schemas.AdminUpdate, db: Session =
     db.refresh(admin)
     return admin
 
-# Delete Admin
+# -------------------------------------------------- Delete Admin --------------------------------------------------
 
 
 @router.delete("/{admin_id}", response_model=dict)

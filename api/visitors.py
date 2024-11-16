@@ -1,4 +1,10 @@
 from fastapi import FastAPI, APIRouter
+from fastapi import Depends, HTTPException
+from models import models
+from schemas import schemas
+from db.database import SessionLocal, engine, get_db
+from sqlalchemy.orm import Session
+from typing import List, Union
 
 
 router = APIRouter(prefix="/visitors", tags=["visitors"])
@@ -7,3 +13,78 @@ router = APIRouter(prefix="/visitors", tags=["visitors"])
 @router.get("/")
 def get_visitors():
     return {"name": "Judah Chisare", "national_id": "67-161886z67"}
+
+# Create Visitor
+
+
+@router.post("/visitors/", response_model=schemas.VisitorResponse)
+def create_visitor(visitor: schemas.VisitorCreate, db: Session = Depends(get_db)):
+    db_visitor = db.query(models.Visitor).filter(
+        models.Visitor.national_id == visitor.national_id).first()
+    if db_visitor:
+        raise HTTPException(
+            status_code=400, detail="National ID already registered")
+    new_visitor = models.Visitor(**visitor.dict())
+    db.add(new_visitor)
+    db.commit()
+    db.refresh(new_visitor)
+    return new_visitor
+
+# Get All Visitors
+
+
+@router.get("/visitors/", response_model=List[schemas.VisitorResponse])
+def read_visitors(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    visitors = db.query(models.Visitor).all()
+    return visitors
+
+# Get Single Visitor by ID
+
+
+@router.get("/visitors/{visitor_id}", response_model=schemas.schemas.VisitorResponse)
+def read_visitor(visitor_id: int, db: Session = Depends(get_db)):
+    visitor = db.query(models.Visitor).filter(
+        models.Visitor.id == visitor_id).first()
+    if not visitor:
+        raise HTTPException(status_code=404, detail="Visitor not found")
+    return visitor
+
+# Query Visitor by National ID
+
+
+@router.get("/visitors/by-national-id/{national_id}", response_model=schemas.VisitorResponse)
+def get_visitor_by_national_id(national_id: str, db: Session = Depends(get_db)):
+    visitor = db.query(models.Visitor).filter(
+        models.Visitor.national_id == national_id).first()
+    if not visitor:
+        raise HTTPException(
+            status_code=404, detail="Visitor not found with the given National ID")
+    return visitor
+
+# Update Visitor
+
+
+@router.put("/visitors/{visitor_id}", response_model=schemas.VisitorResponse)
+def update_visitor(visitor_id: int, visitor_update: schemas.VisitorUpdate, db: Session = Depends(get_db)):
+    visitor = db.query(models.Visitor).filter(
+        models.Visitor.id == visitor_id).first()
+    if not visitor:
+        raise HTTPException(status_code=404, detail="Visitor not found")
+    for key, value in visitor_update.dict(exclude_unset=True).items():
+        setattr(visitor, key, value)
+    db.commit()
+    db.refresh(visitor)
+    return visitor
+
+# Delete Visitor
+
+
+@router.delete("/visitors/{visitor_id}", response_model=dict)
+def delete_visitor(visitor_id: int, db: Session = Depends(get_db)):
+    visitor = db.query(models.Visitor).filter(
+        models.Visitor.id == visitor_id).first()
+    if not visitor:
+        raise HTTPException(status_code=404, detail="Visitor not found")
+    db.delete(visitor)
+    db.commit()
+    return {"detail": "Visitor deleted successfully"}

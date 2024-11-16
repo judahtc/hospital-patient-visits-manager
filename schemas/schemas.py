@@ -60,3 +60,69 @@ class AdminResponse(AdminBase):
 
     class Config:
         orm_mode = True
+
+# Pydantic Models
+
+
+class PatientBase(BaseModel):
+    first_name: str
+    last_name: str
+    phone_number: str
+    email: EmailStr
+    next_of_kin_email: Optional[EmailStr] = None
+    ward_number: str
+    room_number: str
+    checkin_date: datetime
+    checkout_date: Optional[datetime] = None
+    hospital_id: int
+
+
+class PatientCreate(PatientBase):
+    password: str  # This should be hashed before saving
+
+
+class PatientUpdate(BaseModel):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    phone_number: Optional[str] = None
+    email: Optional[EmailStr] = None
+    next_of_kin_email: Optional[EmailStr] = None
+    ward_number: Optional[str] = None
+    room_number: Optional[str] = None
+    checkin_date: Optional[datetime] = None
+    checkout_date: Optional[datetime] = None
+    hospital_id: Optional[int] = None
+
+
+class PatientResponse(PatientBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class VisitorBase(BaseModel):
+    name: str
+    national_id: str
+    visited: bool = False
+    visit_date: datetime
+    patient_id: int
+
+
+class VisitorCreate(VisitorBase):
+    pass
+
+
+class VisitorUpdate(BaseModel):
+    name: Optional[str] = None
+    national_id: Optional[str] = None
+    visited: Optional[bool] = None
+    visit_date: Optional[datetime] = None
+    patient_id: Optional[int] = None
+
+
+class VisitorResponse(VisitorBase):
+    id: int
+
+    class Config:
+        orm_mode = True
