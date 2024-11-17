@@ -9,11 +9,6 @@ from typing import List, Union
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 
-@router.get("/")
-def get_admins():
-    return {"name": "Judah Chisare", "national_id": "67-161886z67"}
-
-
 # ------------------------------------- Create Admins --------------------------------------------------
 
 
@@ -33,7 +28,7 @@ def create_admin(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=List[schemas.AdminResponse])
-def read_admins(skip: int = 0,  db: Session = Depends(get_db)):
+def read_admins(db: Session = Depends(get_db)):
     admins = db.query(models.Admin).all()
     return admins
 
