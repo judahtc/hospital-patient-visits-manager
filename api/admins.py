@@ -5,7 +5,7 @@ from schemas import schemas
 from db.database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
 from typing import List, Union
-
+import sqlalchemy
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 
@@ -17,13 +17,20 @@ def create_admin(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
     db_admin = db.query(models.Admin).filter(
         models.Admin.email == admin.email).first()
     if db_admin:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    new_admin = models.Admin(**admin.dict())
-    db.add(new_admin)
-    db.commit()
-    db.refresh(new_admin)
-    return new_admin
 
+        raise HTTPException(status_code=400, detail="Email already registered")
+    try:
+        new_admin = models.Admin(**admin.dict())
+
+        db.add(new_admin)
+
+        db.commit()
+        db.refresh(new_admin)
+        return new_admin
+    except sqlalchemy.exc.IntegrityError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=400, detail=str(e.orig))
 # ------------------------------------- Read All Admins --------------------------------------------------
 
 
