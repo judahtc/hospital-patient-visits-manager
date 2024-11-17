@@ -62,7 +62,6 @@ def update_hospital(hospital_id: int, hospital: schemas.HospitalUpdate, db: Sess
     for key, value in hospital.dict(exclude_unset=True).items():
         setattr(db_hospital, key, value)
 
-    db_hospital.updated_at = datetime.now
     db.commit()
     db.refresh(db_hospital)
     return db_hospital
