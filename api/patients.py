@@ -11,11 +11,6 @@ from typing import List, Union
 router = APIRouter(prefix="/patients", tags=["patients"])
 
 
-@router.get("/")
-def get_patients():
-    return {"name": "Judah Chisare", "national_id": "67-161886z67"}
-
-
 # Create Patient
 @router.post("/", response_model=schemas.PatientResponse)
 def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)):
@@ -33,7 +28,7 @@ def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)
 
 
 @router.get("/", response_model=List[schemas.PatientResponse])
-def read_patients(skip: int = 0,  db: Session = Depends(get_db)):
+def read_patients(db: Session = Depends(get_db)):
     patients = db.query(models.Patient).all()
     return patients
 
