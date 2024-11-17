@@ -17,7 +17,7 @@ def get_patients():
 
 
 # Create Patient
-@router.post("/patients/", response_model=schemas.PatientResponse)
+@router.post("/", response_model=schemas.PatientResponse)
 def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)):
     db_patient = db.query(models.Patient).filter(
         models.Patient.email == patient.email).first()
@@ -32,7 +32,7 @@ def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)
 # Get All Patients
 
 
-@router.get("/patients/", response_model=List[schemas.PatientResponse])
+@router.get("/", response_model=List[schemas.PatientResponse])
 def read_patients(skip: int = 0,  db: Session = Depends(get_db)):
     patients = db.query(models.Patient).all()
     return patients
@@ -40,7 +40,7 @@ def read_patients(skip: int = 0,  db: Session = Depends(get_db)):
 # Get Single Patient by ID
 
 
-@router.get("/patients/{patient_id}", response_model=schemas.PatientResponse)
+@router.get("/{patient_id}", response_model=schemas.PatientResponse)
 def read_patient(patient_id: int, db: Session = Depends(get_db)):
     patient = db.query(models.Patient).filter(
         models.Patient.id == patient_id).first()
@@ -51,7 +51,7 @@ def read_patient(patient_id: int, db: Session = Depends(get_db)):
 # Update Patient
 
 
-@router.put("/patients/{patient_id}", response_model=schemas.PatientResponse)
+@router.put("/{patient_id}", response_model=schemas.PatientResponse)
 def update_patient(patient_id: int, patient_update: schemas.PatientUpdate, db: Session = Depends(get_db)):
     patient = db.query(models.Patient).filter(
         models.Patient.id == patient_id).first()
@@ -66,7 +66,7 @@ def update_patient(patient_id: int, patient_update: schemas.PatientUpdate, db: S
 # Delete Patient
 
 
-@router.delete("/patients/{patient_id}", response_model=dict)
+@router.delete("/{patient_id}", response_model=dict)
 def delete_patient(patient_id: int, db: Session = Depends(get_db)):
     patient = db.query(models.Patient).filter(
         models.Patient.id == patient_id).first()
