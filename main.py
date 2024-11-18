@@ -1,5 +1,6 @@
 from typing import Union
-from api import patients, visitors, admins, hospital
+from api import patients, visitors, admins, hospital, security
+
 from fastapi import FastAPI
 from models import models
 from db.database import engine
@@ -18,3 +19,4 @@ app.include_router(hospital.router)
 app.include_router(admins.router)
 app.include_router(patients.router)
 app.include_router(visitors.router)
+app.include_router(security.router)

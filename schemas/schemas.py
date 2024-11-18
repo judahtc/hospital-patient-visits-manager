@@ -126,3 +126,9 @@ class VisitorResponse(VisitorBase):
 
     class Config:
         orm_mode = True
+
+
+class LoginSchema(BaseModel):
+    username: Optional[str] = None
+    email: Optional[str] = None
+    password: str
