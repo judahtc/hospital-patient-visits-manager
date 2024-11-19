@@ -15,8 +15,8 @@ def read_root():
     return {"Hey": "I am working"}
 
 
+app.include_router(security.router)
 app.include_router(hospital.router)
 app.include_router(admins.router)
 app.include_router(patients.router)
 app.include_router(visitors.router)
-app.include_router(security.router)

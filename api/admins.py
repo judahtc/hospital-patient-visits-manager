@@ -6,7 +6,10 @@ from db.database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
 from typing import List, Union
 import sqlalchemy
+from jwt.exceptions import InvalidTokenError
+from passlib.context import CryptContext
 router = APIRouter(prefix="/admin", tags=["admin"])
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 # ------------------------------------- Create Admins --------------------------------------------------
@@ -20,7 +23,11 @@ def create_admin(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
 
         raise HTTPException(status_code=400, detail="Email already registered")
     try:
-        new_admin = models.Admin(**admin.dict())
+
+        admin_data = admin.dict()
+        my_hashed_password = pwd_context.hash(admin.password)
+        admin_data['password'] = my_hashed_password
+        new_admin = models.Admin(**admin_data)
 
         db.add(new_admin)
 
