@@ -10,6 +10,7 @@ import sqlalchemy
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 router = APIRouter(prefix="/auth", tags=["auth"])
+origins = ["*"]
 
 
 @router.post("/login")
