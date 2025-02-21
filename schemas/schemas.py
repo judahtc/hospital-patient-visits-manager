@@ -82,6 +82,7 @@ class PatientCreate(PatientBase):
 
 
 class PatientUpdate(BaseModel):
+    
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     phone_number: Optional[str] = None
@@ -95,6 +96,7 @@ class PatientUpdate(BaseModel):
 
 
 class PatientResponse(PatientBase):
+    name: Optional[str] = None
     id: int
 
     class Config:
