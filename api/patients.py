@@ -32,7 +32,11 @@ def read_patients(db: Session = Depends(get_db)):
     patients = db.query(models.Patient).all()
 
     for patient in patients:
+        
         patient.name=patient.first_name+' '+patient.last_name
+        print(patient.name)
+
+
     return patients
 
 # Get Single Patient by ID
