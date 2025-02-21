@@ -30,6 +30,9 @@ def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)
 @router.get("/", response_model=List[schemas.PatientResponse])
 def read_patients(db: Session = Depends(get_db)):
     patients = db.query(models.Patient).all()
+
+    for patient in patients:
+        patient.name=patient.first_name+' '+patient.last_name
     return patients
 
 # Get Single Patient by ID
