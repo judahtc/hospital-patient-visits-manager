@@ -72,13 +72,13 @@ class PatientBase(BaseModel):
     next_of_kin_email: Optional[EmailStr] = None
     ward_number: str
     room_number: str
-    checkin_date: datetime
+    checkin_date:  Optional[datetime] = None
     checkout_date: Optional[datetime] = None
     hospital_id: int
 
 
 class PatientCreate(PatientBase):
-    password: str  # This should be hashed before saving
+    password: Optional[datetime] = None 
 
 
 class PatientUpdate(BaseModel):
