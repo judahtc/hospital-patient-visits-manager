@@ -49,15 +49,23 @@ def read_patient(email: str, db: Session = Depends(get_db)):
     patient = db.query(models.Patient).filter(
         models.Patient.email == email).first()
     patient.name=patient.first_name+' '+patient.last_name
-    visitors = db.query(models.Visitor).filter(
-        models.Visitor.id == patient.id)
+    visitors=db.query(models.Visitor).filter(models.Visitor.patient_id == patient.id).all()
     visitor_ids=[]
     for visitor in visitors:
-        visitor_ids.append(visitor.id)
+        visitor_dict = {
+            "id": visitor.id,
+            "name": visitor.name,
+            "patient_id": visitor.national_id,
+            "visited": visitor.visited,
+        
+        }
+        visitor_ids.append(visitor_dict)
+       
 
     patient.patient_visitors=visitor_ids
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
+    
     return patient
 
 # Update Patient
