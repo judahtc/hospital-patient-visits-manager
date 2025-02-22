@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, Union
+from typing import Optional, Union, Any
 from uuid import UUID
 from datetime import datetime
 
@@ -68,17 +68,17 @@ class PatientBase(BaseModel):
     first_name: str
     last_name: str
     phone_number: str
-    email: EmailStr
+    email: str
     next_of_kin_email: Optional[EmailStr] = None
     ward_number: str
-    room_number: str
-    checkin_date:  Optional[datetime] = None
-    checkout_date: Optional[datetime] = None
+    room_number: Optional[str] = None
+    checkin_date:  datetime | None = None
+    checkout_date: datetime | None = None
     hospital_id: int
 
 
 class PatientCreate(PatientBase):
-    password: Optional[datetime] = None 
+    password: str | None = None
 
 
 class PatientUpdate(BaseModel):
