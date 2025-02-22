@@ -11,8 +11,9 @@ router = APIRouter(prefix="/visitors", tags=["visitors"])
 
 
 @router.get("/")
-def get_visitors():
-    return {"name": "Judah Chisare", "national_id": "67-161886z67"}
+def get_visitors(db:Session= Depends(get_db)):
+    visitors=db.query(models.Visitor).all()
+    return visitors
 
 # Create Visitor
 

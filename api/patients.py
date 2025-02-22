@@ -44,10 +44,18 @@ def read_patients(db: Session = Depends(get_db)):
 # Get Single Patient by ID
 
 
-@router.get("/{patient_id}", response_model=schemas.PatientResponse)
-def read_patient(patient_id: int, db: Session = Depends(get_db)):
+@router.get("/{email}", response_model=schemas.PatientResponse)
+def read_patient(email: str, db: Session = Depends(get_db)):
     patient = db.query(models.Patient).filter(
-        models.Patient.id == patient_id).first()
+        models.Patient.email == email).first()
+    patient.name=patient.first_name+' '+patient.last_name
+    visitors = db.query(models.Visitor).filter(
+        models.Visitor.id == patient.id)
+    visitor_ids=[]
+    for visitor in visitors:
+        visitor_ids.append(visitor.id)
+
+    patient.patient_visitors=visitor_ids
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
     return patient
