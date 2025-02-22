@@ -63,7 +63,7 @@ class Patient(Base):
     next_of_kin_email = Column(String, nullable=True)
     ward_number = Column(String, nullable=False)
     room_number = Column(String, nullable=False)
-    checkin_date = Column(TIMESTAMP, nullable=False)
+    checkin_date = Column(TIMESTAMP, nullable=False, default=datetime.now())
     checkout_date = Column(TIMESTAMP, nullable=True)
     hospital_id = Column(Integer, ForeignKey("hospitals.id"), nullable=False)
     hospital = relationship("Hospital", back_populates="patients")
