@@ -38,6 +38,7 @@ def read_patients(db: Session = Depends(get_db)):
         patient.name=patient.first_name+' '+patient.last_name
         print(patient.name)
 
+    patients=sorted(patients, key=lambda x: x.checkin_date, reverse=True)
 
     return patients
 
