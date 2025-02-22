@@ -19,6 +19,7 @@ def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)
     if db_patient:
         raise HTTPException(status_code=400, detail="Email already registered")
     new_patient = models.Patient(**patient.dict())
+    new_patient.hospital_id=1
     db.add(new_patient)
     db.commit()
     db.refresh(new_patient)
