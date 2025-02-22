@@ -69,7 +69,7 @@ class PatientBase(BaseModel):
     last_name: str
     phone_number: str
     email: str
-    next_of_kin_email: Optional[EmailStr] = None
+    next_of_kin_email: EmailStr | None = None
     ward_number: str
     room_number: Optional[str] = None
     checkin_date:  datetime | None = None
