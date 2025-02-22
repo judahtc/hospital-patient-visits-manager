@@ -97,7 +97,7 @@ class PatientUpdate(BaseModel):
 
 class PatientResponse(PatientBase):
     name: Optional[str] = None
-    patient_visitors: list[Any]
+    patient_visitors: list[Any]| None = None
     id: int
 
     class Config:
