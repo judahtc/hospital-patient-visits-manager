@@ -74,7 +74,7 @@ class PatientBase(BaseModel):
     room_number: Optional[str] = None
     checkin_date:  datetime | None = None
     checkout_date: datetime | None = None
-    hospital_id: int
+    hospital_id: int| None = None
 
 
 class PatientCreate(PatientBase):
