@@ -73,7 +73,7 @@ def read_patient_by_id(id: int, db: Session = Depends(get_db)):
     patient = db.query(models.Patient).filter(
         models.Patient.id == id).first()
   
-    return patient.email
+    return {"email":patient.email}
 
 # Update Patient
 
