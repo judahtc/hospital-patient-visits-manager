@@ -75,6 +75,7 @@ class PatientBase(BaseModel):
     checkin_date:  datetime | None = None
     checkout_date: datetime | None = None
     hospital_id: int| None = None
+    discharged: int| None = None
 
 
 class PatientCreate(PatientBase):
