@@ -8,5 +8,5 @@ from typing import List, Union
 import sqlalchemy
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
-router = APIRouter(prefix="/admin", tags=["admin"])
+router = APIRouter(prefix="/audit", tags=["audit"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
