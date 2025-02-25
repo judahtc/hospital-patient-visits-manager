@@ -75,7 +75,7 @@ class PatientBase(BaseModel):
     checkin_date:  datetime | None = None
     checkout_date: datetime | None = None
     hospital_id: int| None = None
-    discharged: int| None = None
+    discharged: bool| None = None
 
 
 class PatientCreate(PatientBase):
@@ -91,7 +91,7 @@ class PatientUpdate(BaseModel):
     next_of_kin_email: Optional[EmailStr] = None
     ward_number: Optional[str] = None
     room_number: Optional[str] = None
-    discharged: int| None = None
+    discharged: bool| None = None
     checkin_date: Optional[datetime] = None
     checkout_date: Optional[datetime] = None
     hospital_id: Optional[int] = None
