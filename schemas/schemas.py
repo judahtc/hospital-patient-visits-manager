@@ -91,6 +91,7 @@ class PatientUpdate(BaseModel):
     next_of_kin_email: Optional[EmailStr] = None
     ward_number: Optional[str] = None
     room_number: Optional[str] = None
+    discharged: int| None = None
     checkin_date: Optional[datetime] = None
     checkout_date: Optional[datetime] = None
     hospital_id: Optional[int] = None
