@@ -21,7 +21,7 @@ def audit_trail_by_timestamp(timestamp:str):
 def create_audit_trail():
     return f"audit trail "
 @router.put('/')
-def create_audit_trail(timestamp:str):
+def update_audit_trail(timestamp:str):
     return f"audit trail"
 @router.delete('/{id}')
 def delete_audit_trail_by_id(id:str):
