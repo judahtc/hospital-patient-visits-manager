@@ -20,9 +20,9 @@ def audit_trail_by_timestamp(timestamp:str):
 @router.post('/{timestamp}')
 def create_audit_trail():
     return f"audit trail "
-@router.put('/{timestamp}')
+@router.put('/')
 def create_audit_trail(timestamp:str):
-    return f"audit trail {timestamp}"
-@router.delete('/{timestamp}')
-def delete_audit_trail_by_id(timestamp:str):
-    return f"audit trail {timestamp}"
+    return f"audit trail"
+@router.delete('/{id}')
+def delete_audit_trail_by_id(id:str):
+    return f"audit trail {id}"
