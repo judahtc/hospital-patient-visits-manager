@@ -10,3 +10,5 @@ from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 router = APIRouter(prefix="/audit", tags=["audit"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+@router.get('/')
