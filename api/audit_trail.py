@@ -13,3 +13,4 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 @router.get('/')
 def audit_trail();
+    return "audit trail"
