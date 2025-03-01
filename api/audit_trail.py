@@ -17,3 +17,6 @@ def audit_trail():
 @router.get('/{timestamp}')
 def audit_trail_by_timestamp(timestamp:str):
     return f"audit trail {timestamp}"
+@router.post('/{timestamp}')
+def create_audit_trail(timestamp:str):
+    return f"audit trail {timestamp}"
