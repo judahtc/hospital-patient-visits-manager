@@ -14,12 +14,18 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 @router.get('/')
 def audit_trail():
     return "audit trail"
+
+
 @router.get('/{timestamp}')
 def audit_trail_by_timestamp(timestamp:str):
     return f"audit trail {timestamp}"
+
+
 @router.post('/{timestamp}')
 def create_audit_trail():
     return f"audit trail "
+
+
 @router.put('/')
 def update_audit_trail(timestamp:str):
     return f"audit trail"

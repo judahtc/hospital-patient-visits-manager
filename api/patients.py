@@ -102,3 +102,12 @@ def delete_patient(patient_id: int, db: Session = Depends(get_db)):
     db.delete(patient)
     db.commit()
     return {"detail": "Patient deleted successfully"}
+@router.delete("/{patient_id}", response_model=dict)
+def discharge_patient(patient_id: int, db: Session = Depends(get_db)):
+    patient = db.query(models.Patient).filter(
+        models.Patient.id == patient_id).first()
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    db.delete(patient)
+    db.commit()
+    return {"detail": "Patient deleted successfully"}
