@@ -102,7 +102,7 @@ def delete_patient(patient_id: int, db: Session = Depends(get_db)):
     db.delete(patient)
     db.commit()
     return {"detail": "Patient deleted successfully"}
-@router.delete("/{patient_id}", response_model=dict)
+@router.put("/{patient_id}", response_model=dict)
 def discharge_patient(patient_id: int, db: Session = Depends(get_db)):
     patient = db.query(models.Patient).filter(
         models.Patient.id == patient_id).first()
