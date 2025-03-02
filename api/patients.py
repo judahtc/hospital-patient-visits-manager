@@ -108,6 +108,6 @@ def discharge_patient(patient_id: int, db: Session = Depends(get_db)):
         models.Patient.id == patient_id).first()
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
-    db.delete(patient)
+    patient.discharged=True
     db.commit()
     return {"detail": "Patient deleted successfully"}
