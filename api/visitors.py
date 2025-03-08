@@ -99,6 +99,6 @@ def checkin_visitor(visitor_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Visitor not found")
     db.delete(visitor)
     db.commit()
-    return {"detail": "Visitor deleted successfully"}
+    return {"detail": "Visitor checked in successfully"}
 
 
