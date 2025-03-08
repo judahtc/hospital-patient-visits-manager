@@ -110,4 +110,4 @@ def discharge_patient(patient_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Patient not found")
     patient.discharged=True
     db.commit()
-    return {"detail": "Patient deleted successfully"}
+    return {"detail": "Patient discharged successfully"}
