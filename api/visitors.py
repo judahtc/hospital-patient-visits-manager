@@ -92,7 +92,7 @@ def delete_visitor(visitor_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{visitor_id}", response_model=dict)
-def checkin_visitor(visitor_id: int, db: Session = Depends(get_db)):
+def check_in_visitor(visitor_id: int, db: Session = Depends(get_db)):
     visitor = db.query(models.Visitor).filter(
         models.Visitor.id == visitor_id).first()
     if not visitor:
