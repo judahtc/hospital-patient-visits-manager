@@ -97,7 +97,9 @@ def checkin_visitor(visitor_id: int, db: Session = Depends(get_db)):
         models.Visitor.id == visitor_id).first()
     if not visitor:
         raise HTTPException(status_code=404, detail="Visitor not found")
-    db.delete(visitor)
+    
+
+    # CHECK IN CODE
     db.commit()
     return {"detail": "Visitor checked in successfully"}
 
