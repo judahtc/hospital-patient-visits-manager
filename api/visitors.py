@@ -102,5 +102,16 @@ def check_in_visitor(visitor_id: int, db: Session = Depends(get_db)):
     # CHECK IN CODE
     db.commit()
     return {"detail": "Visitor checked in successfully"}
+@router.put("/{visitor_id}", response_model=dict)
+def re_check_in_visitor(visitor_id: int, db: Session = Depends(get_db)):
+    visitor = db.query(models.Visitor).filter(
+        models.Visitor.id == visitor_id).first()
+    if not visitor:
+        raise HTTPException(status_code=404, detail="Visitor not found")
+    
+
+    # CHECK IN CODE
+    db.commit()
+    return {"detail": "Visitor checked in successfully"}
 
 
